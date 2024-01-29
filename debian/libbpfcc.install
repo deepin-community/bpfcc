@@ -1,0 +1,2 @@
+usr/lib/*/libbcc.so.*
+usr/lib/*/libbcc_bpf.so.*

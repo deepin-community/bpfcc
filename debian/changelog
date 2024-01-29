@@ -1,5 +1,542 @@
-template-repository (1.0-1) unstable; urgency=medium
+bpfcc (0.26.0+ds-1) unstable; urgency=medium
 
-  * Initial release
+  * [b4a876d] New upstream version 0.26.0+ds
+  * [90d7771] Refresh patch 2003 for new release
 
- -- Tsic404 <liuheng@deepin.org>  Sat, 28 Jan 2023 13:46:49 +0800
+ -- Vasudev Kamath <vasudev@debian.org>  Mon, 13 Feb 2023 09:49:33 +0530
+
+bpfcc (0.25.0+ds-2) unstable; urgency=medium
+
+  * [9fe5665] Cleanup existing temporary kernel headers path.
+    Thanks to Jakub Wilk (Closes: 1028479)
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Mon, 23 Jan 2023 16:00:48 +0530
+
+bpfcc (0.25.0+ds-1) unstable; urgency=medium
+
+  [ Debian Janitor ]
+  * [09c55f4] Remove constraints unnecessary since buster
+
+  [ Vasudev Kamath ]
+  * [8e5006c] New upstream version 0.25.0+ds
+  * [ed6ed86] Drop patch 0001 which-tools-include-blk-mq.h.
+  * [ceb5677] Refresh patch 2003-libbpf-tools-debian
+
+ -- Vasudev Kamath <vasudev@debian.org>  Wed, 21 Sep 2022 10:40:08 +0530
+
+bpfcc (0.24.0+ds-1) unstable; urgency=medium
+
+  * [25e9441] New upstream version 0.24.0+ds.
+    Closes: bug#1002291, Thanks to Sudip Mukherjee.
+     + Support for kernel up to 5.16
+     + bcc tools: update for trace.py, sslsniff.py, tcptop.py, hardirqs.py, etc.
+     + new libbpf tools: bashreadline
+     + allow specify wakeup_events for perf buffer
+     + support BPF_MAP_TYPE_{INODE, TASK}_STORAGE maps
+     + remove all deprecated libbpf function usage
+     + remove P4/B language support
+     + major test infra change, using github actions now
+     + doc update, bug fixes and other tools improvement
+  * [c2634bc] Refresh patch 2003 for upstream release 0.24.0
+  * [25e9441] New upstream version 0.24.0+ds
+  * [c2634bc] Refresh patch 2003 for upstream release 0.24.0
+  * [a6dfe80] Add patch 0001 to fix the issue in bio tools.
+  * [25e9441] New upstream version 0.24.0+ds
+  * [c2634bc] Refresh patch 2003 for upstream release 0.24.0
+  * [22f934a] Add patch 0001-tools-include-blk-mq.h-in-bio-tools.patch
+
+ -- Vasudev Kamath <vasudev@debian.org>  Tue, 03 May 2022 15:46:46 +0530
+
+bpfcc (0.23.0+ds-1) unstable; urgency=medium
+
+  * [7e2f83e] New upstream version 0.23.0+ds
+  * [f32279a] Refresh patch 2003 with new release of bcc.
+
+ -- Vasudev Kamath <vasudev@debian.org>  Tue, 03 May 2022 11:38:29 +0530
+
+bpfcc (0.22.0+ds-2) unstable; urgency=medium
+
+  * Upload to unstable.
+
+ -- Vasudev Kamath <vasudev@debian.org>  Thu, 02 Dec 2021 12:48:51 +0530
+
+bpfcc (0.22.0+ds-1) experimental; urgency=medium
+
+  * [75dc27e] New upstream version 0.22.0+ds
+     + Support for kernel up to 5.14
+     + add ipv4/ipv6 filter support for tcp trace tools
+     + add python interface to attach raw perf events
+     + fix tcpstates for incorrect display of dport
+     + new options for bcc tools runqslower, argdist
+     + new libbpf-tools: filetop, exitsnoop, tcprtt
+     + doc update, bug fixes and other tools improvement
+  * [37970c9] Drop patch which is merged upstream
+    0001-libbpf-tools-readahead-don-t-mark-struct-hist-as-sta.patch.
+
+ -- Vasudev Kamath <vasudev@debian.org>  Tue, 28 Sep 2021 16:18:12 +0530
+
+bpfcc (0.21.0+ds-7) unstable; urgency=medium
+
+  * Upload to unstable
+
+  [ Debian Janitor ]
+  * [6b6bd08] Apply multi-arch hints. + libbpfcc, libbpfcc-dev: Add
+    Multi-Arch: same.
+
+ -- Vasudev Kamath <vasudev@debian.org>  Tue, 28 Sep 2021 14:30:36 +0530
+
+bpfcc (0.21.0+ds-6) experimental; urgency=medium
+
+  * [1329347] Drop s390x from Architectures list of libbpf-tools.
+
+ -- Vasudev Kamath <vasudev@debian.org>  Tue, 28 Sep 2021 12:26:02 +0530
+
+bpfcc (0.21.0+ds-5) experimental; urgency=medium
+
+  * [61bbc17] Fence the clean target for libbpf-tools behind architecture check.
+
+ -- Vasudev Kamath <vasudev@debian.org>  Tue, 28 Sep 2021 11:50:04 +0530
+
+bpfcc (0.21.0+ds-4) experimental; urgency=medium
+
+  * [7e2e5e6] Build libbpfcc-dev also on s390x and armhf similar to libbpfcc.
+  * [32e3f0d] Build libbpf-tools only on supported architecture.
+
+ -- Vasudev Kamath <vasudev@debian.org>  Tue, 28 Sep 2021 11:09:20 +0530
+
+bpfcc (0.21.0+ds-3) experimental; urgency=medium
+
+  * [a26969e] Use DEB_HOST_GNU_TYPE for getting system specific libbpf.a
+
+ -- Vasudev Kamath <vasudev@debian.org>  Mon, 27 Sep 2021 15:27:47 +0530
+
+bpfcc (0.21.0+ds-2) experimental; urgency=medium
+
+  * [67ae45f] Restrict architecture for libbpf-tools to amd64 arm64
+    ppc64el and s390x.
+  * [974eab1] Refresh patch 2003 for compiling libbpf-tools.
+    Remove instruction to build libbpf.a which is only relevant when embedded
+    copy of libbpf is used
+  * [6095fd6] Remove compatibility definitions added to support 5.10 kernel.
+  * [fedf9de] Introduce patch to fix readahead libbpf-tools from upstream.
+
+ -- Vasudev Kamath <vasudev@debian.org>  Mon, 27 Sep 2021 12:55:48 +0530
+
+bpfcc (0.21.0+ds-1) experimental; urgency=medium
+
+  * [4ac8de7] New upstream version 0.21.0+ds
+  * [fe4539e] Delete patches merged upstream
+  * [25ecc88] Refresh 2001_fix_path_todeadloc.c.patch to work with new changes
+  * [5fe4cc3] Refresh 0004-compat-defs.patch to add more definitions.
+  * [312ec64] Refresh 0004-compat-defs.patch add more kernel compat definitions
+  * [076f67a] swapin_example has been renamed to swapin
+  * [c48b72d] Add support for building libbpf-tools package
+    Closes: bug#978727, Thanks to Michael Prokop.
+  * [abec541] Bump version of libbpf-dev to >= 0.4.0, needed by libbpf-tools
+  * [55fe1cb] Add lintian override for missing man pages in libbpf-tools
+
+ -- Vasudev Kamath <vasudev@debian.org>  Wed, 04 Aug 2021 13:43:23 +0530
+
+bpfcc (0.18.0+ds-2) unstable; urgency=medium
+
+  * [a328ab5] Do not rename the files under tools/lib to have -bpfcc suffix.
+    Thanks to Salvatore Bonaccorso (Closes: #980296)
+
+ -- Vasudev Kamath <vasudev@debian.org>  Tue, 19 Jan 2021 09:24:13 +0530
+
+bpfcc (0.18.0+ds-1) unstable; urgency=medium
+
+  [ Vasudev Kamath ]
+  * [ac15aec] New upstream version 0.18.0+ds
+
+  [ Luca Boccassi ]
+  * [f56181a] Refresh patches for upstream 0.18.0 release
+  * [0ca71bd] Add 0004-compat-defs.patch to fix build without kernel 5.11
+
+ -- Vasudev Kamath <vasudev@debian.org>  Fri, 15 Jan 2021 11:17:09 +0530
+
+bpfcc (0.17.0+ds-1) unstable; urgency=medium
+
+  [ Luca Boccassi ]
+  * [25bd1bf] New upstream version 0.17.0+ds
+  * [9cfd50f] Backport patches to allow unvendoring of libbpf
+  * [80cdd1a] Backport patch to allow dynamic linking against libclang-cpp
+  * [aab402c] Add patch to remove no-libbpf library flavour
+  * [9821776] Build-depend on libclang-cpp-dev to dynamically link against
+    clang libraries. (Closes: #979015)
+  * [4fc0af4] Build-depend on libbpf-dev, set the CMake variable to use it
+    (Closes: #979016, #942290)
+  * [8f07801] Remove bundling of libbpf, use packaged version
+
+ -- Vasudev Kamath <vasudev@debian.org>  Thu, 07 Jan 2021 16:41:59 +0530
+
+bpfcc (0.17.0-9) unstable; urgency=medium
+
+  * [76dc661] Build with -DENABLE_LLVM_SHARED=on.
+    Thanks to Vincent Bernat (Closes: 977629)
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Sat, 19 Dec 2020 14:07:59 +0530
+
+bpfcc (0.17.0-8) unstable; urgency=medium
+
+  * [bb4e5c5] Drop the symbols file for libbpfcc library.
+    Thanks to Adrian Bunk (Closes: #976596)
+
+ -- Vasudev Kamath <vasudev@debian.org>  Tue, 08 Dec 2020 11:53:12 +0530
+
+bpfcc (0.17.0-7) unstable; urgency=medium
+
+  * [f62f9e8] Really update armhf symbols, batchpatch did not consider
+    all symbols
+
+ -- Vasudev Kamath <vasudev@debian.org>  Wed, 11 Nov 2020 08:55:32 +0530
+
+bpfcc (0.17.0-6) unstable; urgency=medium
+
+  * [955a3d8] Update symbol file for armhf architecture
+
+ -- Vasudev Kamath <vasudev@debian.org>  Tue, 10 Nov 2020 15:22:59 +0530
+
+bpfcc (0.17.0-5) unstable; urgency=medium
+
+  * Upload to unstable
+
+ -- Vasudev Kamath <vasudev@debian.org>  Tue, 10 Nov 2020 12:55:27 +0530
+
+bpfcc (0.17.0-4) experimental; urgency=medium
+
+  * [baeaa5c] Update symbols file for armhf architecture.
+
+ -- Vasudev Kamath <vasudev@debian.org>  Mon, 09 Nov 2020 12:10:20 +0530
+
+bpfcc (0.17.0-3) experimental; urgency=medium
+
+  * [5065456] Enable build on armhf and s390x these arch are supported
+     by upstream
+
+ -- Vasudev Kamath <vasudev@debian.org>  Mon, 09 Nov 2020 10:31:27 +0530
+
+bpfcc (0.17.0-2) unstable; urgency=medium
+
+  * Upload to unstable
+
+ -- Vasudev Kamath <vasudev@debian.org>  Sat, 07 Nov 2020 10:11:03 +0530
+
+bpfcc (0.17.0-1) experimental; urgency=medium
+
+  * [9406b6d] New upstream version 0.17.0
+  * [e034148] Update copyright hints file.
+  * [9695968] Introduce patch to fix path of netqtop.c in netqtop-bpfcc.
+  * [9d6bc84] Update symbols file for 0.17.0 release in amd64
+  * [07948f9] Move swapin example file to doc folder and remove exec
+    permission.
+
+ -- Vasudev Kamath <vasudev@debian.org>  Fri, 06 Nov 2020 13:15:45 +0530
+
+bpfcc (0.16.0-3) unstable; urgency=medium
+
+  * [b56af1b] Update symbols file for arm64.
+    Thanks to Graham Inggs for the bug report. (Closes: #972416)
+
+ -- Vasudev Kamath <vasudev@debian.org>  Wed, 28 Oct 2020 10:41:03 +0530
+
+bpfcc (0.16.0-2) unstable; urgency=medium
+
+  * Upload to unstable.
+  * [bb5fe10] Update symbols file for arm64, ppc64 and ppc64el
+
+ -- Vasudev Kamath <vasudev@debian.org>  Fri, 04 Sep 2020 16:13:10 +0530
+
+bpfcc (0.16.0-1) experimental; urgency=medium
+
+  * [91d874e] New upstream version 0.16.0
+  * [5b11f74] copyright-check: mine license from jpg and jpeg files
+  * [87d34e2] Updated copyright_hints for 0.16.0
+  * [4feea7e] Updated symbols file for 0.16.0 release.
+  * [54b5c8f] Move deadlock.c to /usr/share/bpfcc-tools and patch deadlock-bpfcc
+  * [f528e72] For now drop --no-parallel if something breaks will revert.
+
+ -- Vasudev Kamath <vasudev@debian.org>  Fri, 04 Sep 2020 14:59:20 +0530
+
+bpfcc (0.14.0-3) unstable; urgency=medium
+
+  * Upload to unstable
+
+ -- Vasudev Kamath <vasudev@debian.org>  Thu, 03 Sep 2020 16:41:13 +0530
+
+bpfcc (0.14.0-2) experimental; urgency=medium
+
+  * [717e7c2] Update symbols file for arm64, ppc64 and ppc64el architecture
+
+ -- Vasudev Kamath <vasudev@debian.org>  Thu, 03 Sep 2020 10:32:31 +0530
+
+bpfcc (0.14.0-1) experimental; urgency=medium
+
+  [ Debian Janitor ]
+  * [2c8337d] Add missing build dependency on dh addon.
+  * [663d385] Set upstream metadata fields: Bug-Database, Bug-Submit,
+    Repository, Repository-Browse.
+  * [89e8416] Update standards version to 4.5.0, no changes needed.
+
+  [ Vasudev Kamath ]
+  * [fc1a4b7] Add component = libbpf in debian/gbp.conf
+  * [b9cd982] New upstream version 0.14.0
+  * [faaab4e] Delete fix-ppc64.patch, it has been merged to upstream code.
+  * [71e0883] Install the bpf introspection tool as part of bpfcc-tool
+  * [a0239d1] Only install versioned libraries as part of libbpfcc
+  * [708ca35] Install static libraries as part of libbpfcc-dev package.
+  * [c7dc429] Rename libbpfcc to libbcc-bpf0 and libbpfcc-dev to libbcc-bpf-dev
+  * [4991bf0] Add myself as the Uploader
+  * [8b106fc] Generate symbols file using pkg-kde-symbols package
+  * [f198242] Reformat the Build-Depends in control file
+  * [ce63c32] Reformat the rules file and introduce hardening=+all
+  * [f13fa19] Move BPF introspection too bps to bpfcc-introspection package
+  * [62e313f] Install bpfcc-tools man page using manpages file
+  * [e542371] Make sure all tools in bpfcc-tools has -bpfcc suffix
+  * [93de5f4] Separate hardening from DEB_BUILD_MAINT_OPTIONS
+  * [209ed76] Revert the package renaming of libbpfcc and libbpfcc-dev
+  * [04406f4] Bump debhelper-compat to 13
+  * [0f5c9fc] Add source of libbpf-tools/bin/bpftool to debian/missing-sources
+  * [60722cc] Introduce copyright-check and copyright_hints file
+  * [7da6b60] Update license of embedded libbpf
+  * [781baf1] Add Copyright section for libbpf
+  * [b0fca8a] Updated symbols file
+
+  [ Ritesh Raj Sarraf ]
+  * [01e615b] Refresh patch with gbp pq workflow
+  * [cadf75d] Fix exception in trace-bpfcc.
+    Thanks to Philipp Marek (Closes: #965188)
+
+ -- Vasudev Kamath <vasudev@debian.org>  Tue, 18 Aug 2020 17:44:42 +0530
+
+bpfcc (0.12.0-2) unstable; urgency=medium
+
+  [ Frédéric Bonnard ]
+  * [17d0441] Import upstream patch : fix test_map_in_map.cc compilation error
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Fri, 07 Feb 2020 19:01:42 +0530
+
+bpfcc (0.12.0-1) unstable; urgency=medium
+
+  * [250799a] New upstream version 0.12.0
+  * [281b66f] Add example import commands into d/README.source
+  * [184d93c] Fix installation of some tools in standard path
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Wed, 29 Jan 2020 21:25:30 +0530
+
+bpfcc (0.11.0-1) unstable; urgency=medium
+
+  * [52cfb06] New upstream version 0.11.0 (Closes: #941753)
+  * [a7af29e] Multiple sources are used to build bpfcc
+  * [4d67dd6] Update d/copyright reflecting about new sources
+  * [040e9cc] Drop python2 support
+  * [5f5de07] Instruct dh_python3 to explicitly set shebang
+  * [fc28e57] Bump debhelper compatibility to 12
+  * [cb25f1d] Add Rules-Requires-Root stanza in d/control
+  * [b266b16] Use canonical URI
+  * [83e6674] Bump Standards Version to 4.4.1
+  * [c471de9] Ship libs for libbcc_bpf.so
+  * [e3195c0] Add details about license
+  * [d144eba] Use DEB_BUILD_MAINT_OPTIONS to skip tests
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Sun, 13 Oct 2019 19:49:12 +0530
+
+bpfcc (0.8.0-4) unstable; urgency=medium
+
+  * [6bb6080] Fix .so and its symlink in their respective pacakges.
+    Thanks to Vincent Bernat
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Mon, 04 Feb 2019 15:40:29 +0530
+
+bpfcc (0.8.0-3) unstable; urgency=medium
+
+  * [ae23e3f] Restrict architectures to what is currently buildable
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Sun, 03 Feb 2019 19:56:02 +0530
+
+bpfcc (0.8.0-2) unstable; urgency=medium
+
+  * [b8a9b76] Add .pc and .so files in -dev package.
+    Thanks to Vincent Bernat (Closes: #921188)
+  * [c1424ff] Set architecture dependent for the development package
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Sun, 03 Feb 2019 13:18:21 +0530
+
+bpfcc (0.8.0-1) unstable; urgency=medium
+
+  * [5228c2f] Add debian/watch file.
+    Thanks to Michael Prokop
+  * [1f9bead] Add debian/gbp.conf file
+  * [b172968] New upstream version 0.8.0
+  * [ad863b4] Drop patch fix-uint128-build-failure.patch
+    Not needed anymore
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Fri, 01 Feb 2019 12:29:43 +0530
+
+bpfcc (0.7.0-2) unstable; urgency=medium
+
+  * Disable parallel builds.
+    Thanks to Adrian Bunk and Bernhard Schmidt (Closes: #913609)
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Thu, 29 Nov 2018 18:42:33 +0530
+
+bpfcc (0.7.0-1) unstable; urgency=medium
+
+  [ Ondřej Nový ]
+  * d/copyright: Use https protocol in Format field
+  * d/changelog: Remove trailing whitespaces
+
+  [ Ritesh Raj Sarraf ]
+  * New upstream version 0.7.0
+  * Drop the (now)unnecessary --parallel argument
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Mon, 29 Oct 2018 19:47:53 +0530
+
+bpfcc (0.6.0-2) unstable; urgency=medium
+
+  * Drop patch force-using-clang-4.0.diff (Closes: #906974)
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Fri, 24 Aug 2018 16:23:15 +0545
+
+bpfcc (0.6.0-1) unstable; urgency=medium
+
+  * Bump to debhelper compatibility 11
+  * Install files to all packages
+  * Switch packaging repository to Salsa
+  * New upstream version 0.6.0
+  * Drop patch build-for-multiple-python-installations.diff.
+    Merged upstream
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Fri, 15 Jun 2018 19:13:42 +0545
+
+bpfcc (0.5.0-5) unstable; urgency=medium
+
+  * Add python3 bpfcc package. Thanks to Andreas Gerstmayr
+  * Add python3-distutils to build dependency (Closes: #893434)
+  * Add missing debian documents (Closes: #891035)
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Fri, 23 Mar 2018 15:20:13 +0530
+
+bpfcc (0.5.0-4) unstable; urgency=medium
+
+  * Check for file type before renaming (Closes: #890686)
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Tue, 20 Feb 2018 15:03:10 +0530
+
+bpfcc (0.5.0-3) unstable; urgency=medium
+
+  * Extend libbpfcc to ppc64 too. And restrict bpfcc-lua to amd64 only
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Wed, 20 Dec 2017 21:35:42 +0530
+
+bpfcc (0.5.0-2) unstable; urgency=medium
+
+  * Really enable some 64bit architectures. We'll extend to other
+    architectures only when upstream has readiness
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Tue, 19 Dec 2017 22:47:20 +0530
+
+bpfcc (0.5.0-1) unstable; urgency=medium
+
+  * New upstream version 0.5.0
+  * Drop architecture support to 64bit common architectures only
+    (Closes: #882344)
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Sun, 17 Dec 2017 18:19:44 +0530
+
+bpfcc (0.4.0-1) unstable; urgency=medium
+
+  [ Edward Betts ]
+  * correct spelling mistake
+
+  [ Ritesh Raj Sarraf ]
+  * Fix FTBFS with clang 4.0.
+    Thanks to Sylvestre Ledru (Closes: 882160)
+  * New upstream version 0.4.0
+  * Disable User-level Statically Defined Tracing
+  * Fix patches
+  * Revert "Disable User-level Statically Defined Tracing"
+  * Check manpage file's existence. For now, this will only honor
+    regular manpages, and not symlinks
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Tue, 21 Nov 2017 19:16:03 +0530
+
+bpfcc (0.3.0-4) unstable; urgency=medium
+
+  * Add dependency on library for the development package.
+    Thanks to Alexander Kurtz (Closes: #878922)
+  * Revert "Add depends on linux headers package, which is a dependency
+    for JIT"
+  * Update README.Debian with details about dependency on running
+    kernel development headers and debug package.
+    Thanks to Alexander Kurtz (Closes: #878935)
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Mon, 23 Oct 2017 22:08:02 +0530
+
+bpfcc (0.3.0-3) unstable; urgency=medium
+
+  * Drop netperf from build dependency. It is a non-free package
+  * Don't parse debian/changelog. Instead rely on dpkg for it
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Mon, 09 Oct 2017 23:06:59 +0545
+
+bpfcc (0.3.0-2) unstable; urgency=medium
+
+  * Add depends on linux headers package, which is a dependency
+    for JIT compilation. Thanks to Damien R. (Closes: #877925)
+  * Add some more build deps
+  * Add patches to fix Lua library detection.
+    Thanks to Damien R. (Closes: #873322)
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Mon, 09 Oct 2017 17:06:19 +0545
+
+bpfcc (0.3.0-1) unstable; urgency=medium
+
+  * Restrict Lua dev package to supported architectures
+  * New upstream version 0.3.0
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Tue, 20 Jun 2017 13:07:37 +0545
+
+bpfcc (0.2.0+git0.02884a026-2) unstable; urgency=medium
+
+  * Restrict architecture support for Lua (Closes: 864724)
+  * Run wrap-and-sort
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Wed, 14 Jun 2017 10:02:47 +0545
+
+bpfcc (0.2.0+git0.02884a026-1) unstable; urgency=medium
+
+  * [06cde45] Add Vcs URLs
+  * [d315114] New upstream version 0.2.0+git0.02884a026
+  * [a82a0d3] Add a debian/README.source file
+  * [71ecdd8] Refresh patch debian/patches/fix-install-path.patch
+  * [b907f40] Don't ship cpp binaries.
+    debian/patches/disable-massive-cpp-binaries.patch
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Wed, 22 Feb 2017 15:14:39 +0530
+
+bpfcc (0.2.0-2) unstable; urgency=medium
+
+  * [d33527e] Add libfl-dev to build dependency
+  * [f6c75f8] Drop llvm from build deps. Doesn't need explicit mention
+  * [b1cb3d1] Add patch to fix uint128 build failure on 32bit systems
+  * [4ed5b02] Drop conflict on perf-tools-unstable. With the binary
+    filenames suffixed, both packages can and should co-exist
+  * [0321e23] Educate bpfcc build about linux-headers package split.
+    Thanks to George Kargiotakis (Closes: #849747)
+  * [67afd61] Change all executable filenames. Suffix names with '-bpfcc'
+  * [ffc625a] Drop shlibs:Depends. Not needed here
+  * [f6470d2] Document the binary name suffixes in NEWS and README.Debian
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Fri, 30 Dec 2016 23:46:20 +0530
+
+bpfcc (0.2.0-1) unstable; urgency=medium
+
+  * Initial Release (Closes: #846366)
+    Picked many of the initial packaging bits from upstream repository.
+    Thanks.
+  * [8cf1070] Drop shlibs depends and add python-netaddr to Depends
+  * [a6a9fb4] Add details about files licensed under BSL
+  * [ded0a33] Add Boost License Snippet
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Tue, 13 Dec 2016 22:38:32 +0530

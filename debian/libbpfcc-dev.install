@@ -1,0 +1,4 @@
+usr/include/bcc/*
+usr/lib/*/pkgconfig/libbcc.pc
+usr/lib/*/libbcc*.so
+usr/lib/*/libbcc*.a

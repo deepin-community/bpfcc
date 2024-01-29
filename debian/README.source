@@ -1,0 +1,39 @@
+Thu Dec 31 14:58:40 UTC 2020
+============================
+libbpf is now available in the Debian archive and has been unbundled from this
+repository.
+
+Wed Jan 29 14:28:18 IST 2020
+============================
+libbpf upstream is prepared in a different repository than bpfcc. But their
+releases are done in unison.
+
+Example import:
+
+rrs@priyasi:/var/tmp$ mv libbpf-0.0.6.tar.gz bpfcc_0.12.0.orig-libbpf.tar.gz
+14:26 ♒ ॐ  ☺ 😄    
+
+rrs@priyasi:/var/tmp$ file bpfcc_0.12.0.orig-libbpf.tar.gz
+bpfcc_0.12.0.orig-libbpf.tar.gz: gzip compressed data, from Unix, original size modulo 2^32 870400
+14:26 ♒ ॐ  ☺ 😄    
+
+rrs@priyasi:~/rrs-home/Community/Packaging/bpfcc (master)$ gbp import-orig /var/tmp/bpfcc-0.12.0.tar.gz --component=libbpf --rollback 
+What is the upstream version? [0.12.0] 
+gbp:info: Importing '/var/tmp/bpfcc-0.12.0.tar.gz' to branch 'upstream'...
+gbp:info: Source package is bpfcc
+gbp:info: Upstream version is 0.12.0
+gbp:info: Replacing upstream source on 'master'
+gbp:info: Successfully imported version 0.12.0 of ../bpfcc_0.12.0.orig.tar.gz
+14:26 ♒ ॐ  ☺ 😄    
+
+rrs@priyasi:~/rrs-home/Community/Packaging/bpfcc (master)$ gbp buildpackage --git-component=libbpf
+
+Fri 11 Oct 2019 10:42:18 PM IST
+===============================
+Starting with 0.11.0, we are using multiple sources for bcc: bcc and libbpf for now
+libbpf is pulled in an a --component to bpfcc through gbp import
+
+12 Feb 2017 UNKNOWN IST
+===============================
+The following example command may be used to checkout the sources:
+git archive --format=tar.gz --prefix=bpfcc-0.2.0+git0.9c3c5172/ 9c3c5172 > /tmp/bpfcc-0.2.0+git0.9c3c5172.tar.gz

@@ -1,0 +1,63 @@
+Description: Compile libbpf-tools with system installed libbpf
+Author: Vasudev Kamath <vasudev@debian.org>
+--- a/libbpf-tools/Makefile
++++ b/libbpf-tools/Makefile
+@@ -2,13 +2,11 @@
+ OUTPUT := $(abspath .output)
+ CLANG ?= clang
+ LLVM_STRIP ?= llvm-strip
+-BPFTOOL_SRC := $(abspath ./bpftool/src)
+-BPFTOOL_OUTPUT ?= $(abspath $(OUTPUT)/bpftool)
+-BPFTOOL ?= $(BPFTOOL_OUTPUT)/bootstrap/bpftool
+-LIBBPF_SRC := $(abspath ../src/cc/libbpf/src)
+-LIBBPF_OBJ := $(abspath $(OUTPUT)/libbpf.a)
+ LIBBLAZESYM_SRC := $(abspath blazesym/target/release/libblazesym.a)
+-INCLUDES := -I$(OUTPUT) -I../src/cc/libbpf/include/uapi
++BPFTOOL ?= /usr/sbin/bpftool
++HOST_TRIPLET := $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
++LIBBPF_OBJ := /usr/lib/$(HOST_TRIPLET)/libbpf.a
++INCLUDES := -I$(OUTPUT) -I/usr/include -I/usr/include/$(HOST_TRIPLET)
+ CFLAGS := -g -O2 -Wall
+ BPFCFLAGS := -g -O2 -Wall
+ INSTALL ?= install
+@@ -166,14 +164,10 @@
+ 	$(call msg,INC,$@)
+ 	$(Q)cp blazesym/target/release/blazesym.h $@
+ 
+-$(OUTPUT) $(OUTPUT)/libbpf $(BPFTOOL_OUTPUT):
++$(OUTPUT) $(OUTPUT)/libbpf:
+ 	$(call msg,MKDIR,$@)
+ 	$(Q)mkdir -p $@
+ 
+-$(BPFTOOL): | $(BPFTOOL_OUTPUT)
+-	$(call msg,BPFTOOL,$@)
+-	$(Q)$(MAKE) ARCH= CROSS_COMPILE=  OUTPUT=$(BPFTOOL_OUTPUT)/ -C $(BPFTOOL_SRC) bootstrap
+-
+ $(APPS): %: $(OUTPUT)/%.o $(COMMON_OBJ) $(LIBBPF_OBJ) | $(OUTPUT)
+ 	$(call msg,BINARY,$@)
+ 	$(Q)$(CC) $(CFLAGS) $^ $(LDFLAGS) -lelf -lz -o $@
+@@ -186,7 +180,8 @@
+ 
+ $(OUTPUT)/%.o: %.c $(wildcard %.h) $(LIBBPF_OBJ) | $(OUTPUT)
+ 	$(call msg,CC,$@)
+-	$(Q)$(CC) $(CFLAGS) $(INCLUDES) -c $(filter %.c,$^) -o $@
++	$(Q)$(CC) $(CFLAGS) $(INCLUDES) -c $(filter %.c,$^)        			\
++				 -o $@
+ 
+ $(OUTPUT)/%.skel.h: $(OUTPUT)/%.bpf.o | $(OUTPUT) $(BPFTOOL)
+ 	$(call msg,GEN-SKEL,$@)
+@@ -208,14 +203,6 @@
+ 	$(Q)$(MAKE) -f Makefile.btfgen
+ endif
+ 
+-# Build libbpf.a
+-$(LIBBPF_OBJ): $(wildcard $(LIBBPF_SRC)/*.[ch]) | $(OUTPUT)/libbpf
+-	$(call msg,LIB,$@)
+-	$(Q)$(MAKE) -C $(LIBBPF_SRC) BUILD_STATIC_ONLY=1		      \
+-		    OBJDIR=$(dir $@)libbpf DESTDIR=$(dir $@)		      \
+-		    INCLUDEDIR= LIBDIR= UAPIDIR=			      \
+-		    install
+-
+ $(FSSLOWER_ALIASES): fsslower
+ 	$(call msg,SYMLINK,$@)
+ 	$(Q)ln -f -s $^ $@
