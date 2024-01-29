@@ -1,0 +1,18 @@
+Description: Fix the path of netqtop.c on Debian systems 
+ On Debian system we install the netqtop.c to /usr/share/bpfcc-tools folder
+ adjust the path in utility to match this.
+Author: Vasudev Kamath <vasudev@debian.org>
+Forwarded: not-needed
+Last-Update: 2020-11-06
+
+--- bpfcc-0.17.0.orig/tools/netqtop.py
++++ bpfcc-0.17.0/tools/netqtop.py
+@@ -12,7 +12,7 @@ ROOT_PATH = "/sys/class/net"
+ IFNAMSIZ = 16
+ COL_WIDTH = 10
+ MAX_QUEUE_NUM = 1024
+-EBPF_FILE = "netqtop.c"
++EBPF_FILE = "/usr/share/bpfcc-tools/netqtop.c"
+ 
+ # structure for network interface name array
+ class Devname(Structure):

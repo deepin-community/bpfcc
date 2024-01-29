@@ -1,0 +1,18 @@
+Description: Fix the path to deadlock.c used in deadlock-bpfcc
+  Move the deadlock.c from /usr/sbin/ to /usr/share/bpfcc-tools/ and update
+  the python script to use it from this path
+Author: Vasudev Kamath <vasudev@debian.org>
+Forwarded: not-needed
+Last-Update: 2020-09-04
+
+--- a/tools/deadlock.py
++++ b/tools/deadlock.py
+@@ -475,7 +475,7 @@
+             print('%s. Is the process (pid=%d) running?' % (str(e), args.pid))
+             sys.exit(1)
+ 
+-    with open('deadlock.c') as f:
++    with open('/usr/share/bpfcc-tools/deadlock.c') as f:
+         text = f.read()
+     text = text.replace('MAX_THREADS', str(args.threads));
+     text = text.replace('MAX_EDGES', str(args.edges));

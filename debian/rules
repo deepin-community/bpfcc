@@ -1,4 +1,107 @@
 #!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+include /usr/share/dpkg/pkg-info.mk
+
+# for building libbpf-tools on selective architecture
+include /usr/share/dpkg/architecture.mk
+libbpf_tool_skip_arch := armhf s390x ppc64
+
+# Disable tests as they require root to run
+export DEB_BUILD_MAINT_OPTIONS=nocheck
+export DEB_CPPFLAGS_MAINT_APPEND=-DCUSTOM_MACRO=true
+
+DEB_DIR=$(abspath $(dir $(firstword $(MAKEFILE_LIST))))
+
+# Remove the +ds suffix from the version passed to CMake
+VERSION_UPSTREAM=$(shell echo $(DEB_VERSION_UPSTREAM) | sed -e 's/+ds$$//')
+
 
 %:
-	dh $@
+	dh $@ --buildsystem=cmake --with pkgkde_symbolshelper,python3
+
+override_dh_auto_clean:
+ifneq ($(DEB_HOST_ARCH),$(findstring $(DEB_HOST_ARCH), $(libbpf_tool_skip_arch)))
+	make -C libbpf-tools V=1 clean
+endif
+	dh_auto_clean
+	sed -i 's|lib=$$(dirname $$0)$$|lib=$$(dirname $$0)/lib|' $(CURDIR)/tools/*.sh
+
+override_dh_auto_configure:
+	sed -i "s/\/lib//" $(CURDIR)/tools/*.sh
+	dh_auto_configure -- -DREVISION_LAST=$(VERSION_UPSTREAM) \
+		-DREVISION=$(VERSION_UPSTREAM) \
+		-DCMAKE_USE_LIBBPF_PACKAGE=on \
+		-DLLVM_DEFINITIONS="-D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D__STDC_LIMIT_MACROS" \
+		-DPYTHON_CMD="python3" -DENABLE_LLVM_SHARED=on
+
+override_dh_auto_install:
+	dh_auto_install
+ifneq ($(DEB_HOST_ARCH),$(findstring $(DEB_HOST_ARCH), $(libbpf_tool_skip_arch)))
+	make -C libbpf-tools V=1 prefix=$(DEB_DIR)/tmp/libbpf-tools install
+endif
+	test -d $(CURDIR)/debian/tmp/usr/share/bcc/tools/doc && \
+		mv $(CURDIR)/debian/tmp/usr/share/bcc/tools/doc/* \
+			$(CURDIR)/debian/tmp/usr/share/bcc/doc/ && \
+		rm -d $(CURDIR)/debian/tmp/usr/share/bcc/tools/doc
+
+
+	for eachFile in $(CURDIR)/debian/tmp/usr/share/bcc/tools/* ; do \
+			test -f  $$eachFile && mv $$eachFile $$eachFile-bpfcc ; \
+	done
+
+	# Don't rename the C file to different name and move it to
+	# /usr/share/bpfcc-tools/
+	mkdir -p $(CURDIR)/debian/bpfcc-tools/usr/share/bpfcc-tools/
+	mv $(CURDIR)/debian/tmp/usr/share/bcc/tools/deadlock.c-bpfcc \
+		$(CURDIR)/debian/bpfcc-tools/usr/share/bpfcc-tools/deadlock.c ; \
+	mv $(CURDIR)/debian/tmp/usr/share/bcc/tools/netqtop.c-bpfcc \
+		$(CURDIR)/debian/bpfcc-tools/usr/share/bpfcc-tools/netqtop.c ; \
+
+	# Move the swapin_example file to usr/share/bcc/doc and remove -bpfcc its a
+	# text file
+	mv $(CURDIR)/debian/tmp/usr/share/bcc/tools/swapin-bpfcc \
+		$(CURDIR)/debian/tmp/usr/share/bcc/doc/swapin.txt ; \
+	chmod -x $(CURDIR)/debian/tmp/usr/share/bcc/doc/swapin.txt ; \
+
+	for eachMan in $(CURDIR)/debian/tmp/usr/share/bcc/man/man8/* ; do \
+			test -f $$eachMan && manPage=`basename $$eachMan | cut -d "." -f1`; \
+			if [ $$manPage != "bps" ]; then \
+				mv $$eachMan $(CURDIR)/debian/tmp/usr/share/bcc/man/man8/$$manPage-bpfcc.8 ; \
+			else \
+				mkdir -p $(CURDIR)/debian/tmp/usr/share/bcc/introspection/man/man8/ ; \
+				mv $$eachMan $(CURDIR)/debian/tmp/usr/share/bcc/introspection/man/man8/ ;\
+			fi \
+	done
+
+	#FIXME: I know this is ugly but for the time being doing it this way
+	for eachMan in $(CURDIR)/debian/tmp/usr/share/bcc/man/man8/* ; do \
+		test -f $$eachMan && manPage=`basename $$eachMan | cut -d "." -f1 | cut -d "-" -f1`; \
+		if [ $$manPage = "ucalls" -o $$manPage = "uflow" -o $$manPage = "ugc" \
+					-o $$manPage = "uobjnew" -o $$manPage = "ustat" -o $$manPage = "uthreads" ]; then \
+				mv $$eachMan $(CURDIR)/debian/tmp/usr/share/bcc/man/man8/$$manPage.8 ; \
+		fi \
+	done
+
+
+# Some binaries end up in wrong paths like /usr/sbin/lib/
+# THis fixes those
+	test -d $(CURDIR)/debian/tmp/usr/share/bcc/tools/lib/ && \
+		mv $(CURDIR)/debian/tmp/usr/share/bcc/tools/lib/* \
+			$(CURDIR)/debian/tmp/usr/share/bcc/tools/ && \
+		rm -rf $(CURDIR)/debian/tmp/usr/share/bcc/tools/lib/
+
+override_dh_python3:
+	# See Debian Bug #926187
+	dh_python3 --shebang=/usr/bin/python3
+
+override_dh_installdocs:
+	dh_installdocs -A debian/README.Debian
+
+override_dh_auto_test:
+ifeq (,$(findstring nocheck,$(DEB_BUILD_MAINT_OPTIONS)))
+	dh_auto_test
+endif

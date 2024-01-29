@@ -1,0 +1,55 @@
+From ec281a927799bc0fe93156ccf31f4ddd9f56f0d1 Mon Sep 17 00:00:00 2001
+From: Ritesh Raj Sarraf <rrs@debian.org>
+Date: Mon, 23 Jan 2023 15:56:53 +0530
+Subject: [PATCH] Cleanup existing temporary kernel headers path
+
+Thanks: Jakub Wilk
+Closes: 1028479
+
+If kernel headers are not installed in the usual place, the BPF tools
+try to look them up in /tmp/kheaders-$(uname -r)/, even when this
+directory is owned by another user.
+
+This can be exploited for denial of service, or likely something worse.
+
+To reproduce, run this as a normal user:
+
+    $ mkdir /tmp/kheaders-$(uname -r)/
+    $ mkdir -p /tmp/kheaders-$(uname -r)/include/linux/
+    $ echo "#error this header is malicious" > /tmp/kheaders-$(uname -r)/include/linux/kconfig.h
+
+Then run this as root:
+
+    # opensnoop-bpfcc
+    In file included from <built-in>:1:
+    ././include/linux/kconfig.h:1:2: error: this header is malicious
+    #error this header is malicious
+     ^
+    In file included from <built-in>:2:
+    /virtual/include/bcc/bpf.h:12:10: fatal error: 'linux/types.h' file not found
+    #include <linux/types.h>
+             ^~~~~~~~~~~~~~~
+    2 errors generated.
+    Traceback (most recent call last):
+      File "/usr/sbin/opensnoop-bpfcc", line 261, in <module>
+        b = BPF(text='')
+            ^^^^^^^^^^^^
+      File "/usr/lib/python3/dist-packages/bcc/__init__.py", line 476, in __init__
+        raise Exception("Failed to compile BPF module %s" % (src_file or "<text>"))
+    Exception: Failed to compile BPF module <text>
+---
+ src/cc/frontends/clang/kbuild_helper.cc | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+--- a/src/cc/frontends/clang/kbuild_helper.cc
++++ b/src/cc/frontends/clang/kbuild_helper.cc
+@@ -215,7 +215,8 @@
+   dirpath = std::string(dirpath_tmp);
+ 
+   if (file_exists(dirpath_tmp))
+-    return 0;
++    snprintf(dirpath_tmp, 256, "Cleaning up already existing path %s", dirpath_tmp);
++    system(("rm -rf " + std::string(dirpath_tmp)).c_str());
+ 
+   // First time so extract it
+   return extract_kheaders(dirpath, uname_data);
