@@ -1,5 +1,6 @@
 Description: Compile libbpf-tools with system installed libbpf
 Author: Vasudev Kamath <vasudev@debian.org>
+Forwarded: not-needed
 --- a/libbpf-tools/Makefile
 +++ b/libbpf-tools/Makefile
 @@ -2,13 +2,11 @@

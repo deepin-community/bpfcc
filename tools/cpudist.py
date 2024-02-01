@@ -96,7 +96,7 @@ static inline void store_start(u32 tgid, u32 pid, u32 cpu, u64 ts)
     if (IDLE_FILTER)
         return;
 
-    entry_key_t entry_key = { .pid = pid, .cpu = cpu };
+    entry_key_t entry_key = { .pid = pid, .cpu = (pid == 0 ? cpu : 0xFFFFFFFF) };
     start.update(&entry_key, &ts);
 }
 
@@ -108,7 +108,7 @@ static inline void update_hist(u32 tgid, u32 pid, u32 cpu, u64 ts)
     if (IDLE_FILTER)
         return;
 
-    entry_key_t entry_key = { .pid = pid, .cpu = cpu };
+    entry_key_t entry_key = { .pid = pid, .cpu = (pid == 0 ? cpu : 0xFFFFFFFF) };
     u64 *tsp = start.lookup(&entry_key);
     if (tsp == 0)
         return;
@@ -208,7 +208,7 @@ if debug or args.ebpf:
 max_pid = int(open("/proc/sys/kernel/pid_max").read())
 
 b = BPF(text=bpf_text, cflags=["-DMAX_PID=%d" % max_pid])
-b.attach_kprobe(event_re="^finish_task_switch$|^finish_task_switch\.isra\.\d$",
+b.attach_kprobe(event_re=r'^finish_task_switch$|^finish_task_switch\.isra\.\d$',
                 fn_name="sched_switch")
 
 print("Tracing %s-CPU time... Hit Ctrl-C to end." %

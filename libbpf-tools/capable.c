@@ -312,7 +312,6 @@ int main(int argc, char **argv)
 		}
 	}
 
-	libbpf_set_strict_mode(LIBBPF_STRICT_ALL);
 	libbpf_set_print(libbpf_print_fn);
 
 	obj = capable_bpf__open();
@@ -405,6 +404,7 @@ int main(int argc, char **argv)
 	}
 
 cleanup:
+	perf_buffer__free(pb);
 	capable_bpf__destroy(obj);
 	syms_cache__free(syms_cache);
 	ksyms__free(ksyms);
