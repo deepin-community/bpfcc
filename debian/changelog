@@ -1,3 +1,9 @@
+bpfcc (0.26.0+ds-1deepin1) unstable; urgency=medium
+
+  * add support for riscv64 and loong64
+
+ -- bluesky <chenchongbiao@deepin.org>  Thu, 01 Feb 2024 15:19:20 +0800
+
 bpfcc (0.26.0+ds-1) unstable; urgency=medium
 
   * [b4a876d] New upstream version 0.26.0+ds
