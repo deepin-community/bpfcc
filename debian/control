@@ -3,7 +3,7 @@ Maintainer: Ritesh Raj Sarraf <rrs@debian.org>
 Uploaders: Vasudev Kamath <vasudev@debian.org>
 Section: misc
 Priority: optional
-Standards-Version: 4.5.0
+Standards-Version: 4.6.2
 Build-Depends: arping,
  bison,
  clang-format,
@@ -28,7 +28,8 @@ Build-Depends: arping,
  luajit [amd64 armel armhf i386 mips mipsel powerpc],
  python3-netaddr,
  python3-pyroute2,
- python3-distutils,
+ python3-setuptools,
+ zip,
  python3:any | python3-all:any | python3-dev:any | python3-all-dev:any | dh-sequence-python3,
  bpftool,
  clang
@@ -38,7 +39,7 @@ Vcs-Browser: https://salsa.debian.org/debian/bpfcc
 Rules-Requires-Root: no
 
 Package: libbpfcc
-Architecture: amd64 arm64 ppc64el ppc64 s390x armhf riscv64 loong64
+Architecture: amd64 arm64 ppc64el ppc64 s390x armhf
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Multi-Arch: same
 Description: shared library for BPF Compiler Collection (BCC)
@@ -52,7 +53,7 @@ Description: shared library for BPF Compiler Collection (BCC)
  to control BPF programs from userspace.
 
 Package: libbpfcc-dev
-Architecture: amd64 arm64 ppc64el ppc64 s390x armhf riscv64 loong64
+Architecture: amd64 arm64 ppc64el ppc64 s390x armhf
 Section: libdevel
 Depends: ${misc:Depends},
  libbpfcc (= ${binary:Version})
@@ -114,7 +115,7 @@ Description: tools for BPF Compiler Collection based on libbpf (BTF and CO-RE)
  At this time this package contains subset of tools from bpfcc-tools
 
 Package: bpfcc-introspection
-Architecture: amd64 arm64 ppc64el ppc64 riscv64 loong64
+Architecture: amd64 arm64 ppc64el ppc64
 Depends: ${misc:Depends},
  ${shlibs:Depends},
  libbpfcc (= ${binary:Version})

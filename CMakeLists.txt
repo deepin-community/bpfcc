@@ -6,6 +6,10 @@ if(${CMAKE_VERSION} VERSION_EQUAL 3.12.0 OR ${CMAKE_VERSION} VERSION_GREATER 3.1
   cmake_policy(SET CMP0074 NEW)
 endif()
 
+if(${CMAKE_VERSION} VERSION_EQUAL 3.3.0 OR ${CMAKE_VERSION} VERSION_GREATER 3.3.0)
+  cmake_policy(SET CMP0057 NEW)
+endif()
+
 project(bcc)
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release)
@@ -157,6 +161,10 @@ if(NOT PYTHON_ONLY)
 
     if(${LLVM_PACKAGE_VERSION} VERSION_EQUAL 15 OR ${LLVM_PACKAGE_VERSION} VERSION_GREATER 15)
       find_library(libclangSupport NAMES clangSupport clang-cpp HINTS ${CLANG_SEARCH})
+    endif()
+
+    if(${LLVM_PACKAGE_VERSION} VERSION_EQUAL 18 OR ${LLVM_PACKAGE_VERSION} VERSION_GREATER 18)
+      find_library(libclangAPINotes NAMES clangAPINotes clang-cpp HINTS ${CLANG_SEARCH})
     endif()
 
     find_library(libclang-shared libclang-cpp.so HINTS ${CLANG_SEARCH})

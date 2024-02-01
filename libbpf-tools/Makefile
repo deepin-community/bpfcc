@@ -13,9 +13,10 @@ CFLAGS := -g -O2 -Wall
 BPFCFLAGS := -g -O2 -Wall
 INSTALL ?= install
 prefix ?= /usr/local
-ARCH := $(shell uname -m | sed 's/x86_64/x86/' | sed 's/aarch64/arm64/' \
+ARCH ?= $(shell uname -m | sed 's/x86_64/x86/' | sed 's/aarch64/arm64/' \
 			 | sed 's/ppc64le/powerpc/' | sed 's/mips.*/mips/' \
-			 | sed 's/riscv64/riscv/' | sed 's/loongarch.*/loongarch/')
+			 | sed 's/riscv64/riscv/' | sed 's/loongarch.*/loongarch/' \
+			 | sed 's/s390x/s390/')
 BTFHUB_ARCHIVE ?= $(abspath btfhub-archive)
 ifeq ($(ARCH),x86)
 CARGO ?= $(shell which cargo)
@@ -31,6 +32,8 @@ $(error Architecture $(ARCH) is not supported yet. Please open an issue)
 endif
 
 BZ_APPS = \
+	futexctn \
+	memleak \
 	opensnoop \
 	#
 
@@ -80,6 +83,7 @@ APPS = \
 	tcpconnect \
 	tcpconnlat \
 	tcplife \
+	tcppktlat \
 	tcprtt \
 	tcpstates \
 	tcpsynbl \
@@ -92,8 +96,8 @@ APPS = \
 # export variables that are used in Makefile.btfgen as well.
 export OUTPUT BPFTOOL ARCH BTFHUB_ARCHIVE APPS
 
-FSDIST_ALIASES = btrfsdist ext4dist nfsdist xfsdist
-FSSLOWER_ALIASES = btrfsslower ext4slower nfsslower xfsslower
+FSDIST_ALIASES = btrfsdist ext4dist nfsdist xfsdist f2fsdist
+FSSLOWER_ALIASES = btrfsslower ext4slower nfsslower xfsslower f2fsslower
 SIGSNOOP_ALIAS = killsnoop
 APP_ALIASES = $(FSDIST_ALIASES) $(FSSLOWER_ALIASES) ${SIGSNOOP_ALIAS}
 

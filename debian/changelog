@@ -1,8 +1,18 @@
-bpfcc (0.26.0+ds-1deepin1) unstable; urgency=medium
+bpfcc (0.29.1+ds-1) unstable; urgency=medium
 
-  * add support for riscv64 and loong64
+  * [28e32b6] New upstream version 0.29.1+ds
 
- -- bluesky <chenchongbiao@deepin.org>  Thu, 01 Feb 2024 15:19:20 +0800
+ -- Vasudev Kamath <vasudev@debian.org>  Sun, 17 Dec 2023 13:20:22 +0530
+
+bpfcc (0.28.0+ds-1) unstable; urgency=medium
+
+  * [0d35817] New upstream version 0.28.0+ds
+  * [6ff6592] Add python3-setuptools build-dep
+  * [59ea134] Add build-dep on zip needed by tests
+  * [cb250ee] Bump S-V to 4.6.2, no changes to package
+  * [7115e7c] Mark patch 2003 forwarded as not-needed
+
+ -- Vasudev Kamath <vasudev@debian.org>  Sun, 17 Dec 2023 12:11:00 +0530
 
 bpfcc (0.26.0+ds-1) unstable; urgency=medium
 
