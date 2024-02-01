@@ -38,7 +38,7 @@ Vcs-Browser: https://salsa.debian.org/debian/bpfcc
 Rules-Requires-Root: no
 
 Package: libbpfcc
-Architecture: amd64 arm64 ppc64el ppc64 s390x armhf
+Architecture: amd64 arm64 ppc64el ppc64 s390x armhf riscv64 loong64
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Multi-Arch: same
 Description: shared library for BPF Compiler Collection (BCC)
@@ -52,7 +52,7 @@ Description: shared library for BPF Compiler Collection (BCC)
  to control BPF programs from userspace.
 
 Package: libbpfcc-dev
-Architecture: amd64 arm64 ppc64el ppc64 s390x armhf
+Architecture: amd64 arm64 ppc64el ppc64 s390x armhf riscv64 loong64
 Section: libdevel
 Depends: ${misc:Depends},
  libbpfcc (= ${binary:Version})
@@ -114,7 +114,7 @@ Description: tools for BPF Compiler Collection based on libbpf (BTF and CO-RE)
  At this time this package contains subset of tools from bpfcc-tools
 
 Package: bpfcc-introspection
-Architecture: amd64 arm64 ppc64el ppc64
+Architecture: amd64 arm64 ppc64el ppc64 riscv64 loong64
 Depends: ${misc:Depends},
  ${shlibs:Depends},
  libbpfcc (= ${binary:Version})
