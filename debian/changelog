@@ -1,3 +1,9 @@
+bpfcc (0.29.1+ds-1deepin1) unstable; urgency=medium
+
+  * add support for riscv64 and loong64.
+
+ -- LiChengGang <lichenggang@uniontech.com>  Fri, 02 Feb 2024 00:05:31 +0800
+
 bpfcc (0.29.1+ds-1) unstable; urgency=medium
 
   * [28e32b6] New upstream version 0.29.1+ds
