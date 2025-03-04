@@ -1,3 +1,9 @@
+bpfcc (0.29.1+ds-1deepin1.1) unstable; urgency=medium
+
+  * add Architecture any.
+
+ -- lichenggang <lichenggang@deepin.org>  Tue, 04 Mar 2025 10:48:33 +0800
+
 bpfcc (0.29.1+ds-1deepin1) unstable; urgency=medium
 
   * add support for riscv64 and loong64.
