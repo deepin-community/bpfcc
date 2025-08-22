@@ -43,13 +43,16 @@ Then run this as root:
 
 --- a/src/cc/frontends/clang/kbuild_helper.cc
 +++ b/src/cc/frontends/clang/kbuild_helper.cc
-@@ -215,7 +215,8 @@
+@@ -238,8 +238,10 @@
    dirpath = std::string(dirpath_tmp);
  
-   if (file_exists(dirpath_tmp))
--    return 0;
-+    snprintf(dirpath_tmp, 256, "Cleaning up already existing path %s", dirpath_tmp);
-+    system(("rm -rf " + std::string(dirpath_tmp)).c_str());
- 
-   // First time so extract it
-   return extract_kheaders(dirpath, uname_data);
+   if (file_exists(dirpath_tmp)) {
+-    if (file_exists_and_ownedby(dirpath_tmp, 0))
+-      return 0;
++    if (file_exists_and_ownedby(dirpath_tmp, 0)) {
++        snprintf(dirpath_tmp, 256, "Cleaning up already existing path %s", dirpath_tmp);
++          system(("rm -rf " + std::string(dirpath_tmp)).c_str());
++      }
+     else
+       // The path exists, but is owned by a non-root user
+       // Something fishy is going on

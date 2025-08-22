@@ -5,9 +5,9 @@ Author: Vasudev Kamath <vasudev@debian.org>
 Forwarded: not-needed
 Last-Update: 2020-11-06
 
---- bpfcc-0.17.0.orig/tools/netqtop.py
-+++ bpfcc-0.17.0/tools/netqtop.py
-@@ -12,7 +12,7 @@ ROOT_PATH = "/sys/class/net"
+--- a/tools/netqtop.py
++++ b/tools/netqtop.py
+@@ -12,7 +12,7 @@
  IFNAMSIZ = 16
  COL_WIDTH = 10
  MAX_QUEUE_NUM = 1024

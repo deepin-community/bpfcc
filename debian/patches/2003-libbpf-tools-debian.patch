@@ -18,10 +18,10 @@ Forwarded: not-needed
 +HOST_TRIPLET := $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
 +LIBBPF_OBJ := /usr/lib/$(HOST_TRIPLET)/libbpf.a
 +INCLUDES := -I$(OUTPUT) -I/usr/include -I/usr/include/$(HOST_TRIPLET)
- CFLAGS := -g -O2 -Wall
+ CFLAGS := -g -O2 -Wall -Wmissing-field-initializers -Werror
  BPFCFLAGS := -g -O2 -Wall
  INSTALL ?= install
-@@ -166,14 +164,10 @@
+@@ -173,14 +171,10 @@
  	$(call msg,INC,$@)
  	$(Q)cp blazesym/target/release/blazesym.h $@
  
@@ -37,7 +37,7 @@ Forwarded: not-needed
  $(APPS): %: $(OUTPUT)/%.o $(COMMON_OBJ) $(LIBBPF_OBJ) | $(OUTPUT)
  	$(call msg,BINARY,$@)
  	$(Q)$(CC) $(CFLAGS) $^ $(LDFLAGS) -lelf -lz -o $@
-@@ -186,7 +180,8 @@
+@@ -193,7 +187,8 @@
  
  $(OUTPUT)/%.o: %.c $(wildcard %.h) $(LIBBPF_OBJ) | $(OUTPUT)
  	$(call msg,CC,$@)
@@ -47,7 +47,7 @@ Forwarded: not-needed
  
  $(OUTPUT)/%.skel.h: $(OUTPUT)/%.bpf.o | $(OUTPUT) $(BPFTOOL)
  	$(call msg,GEN-SKEL,$@)
-@@ -208,14 +203,6 @@
+@@ -215,14 +210,6 @@
  	$(Q)$(MAKE) -f Makefile.btfgen
  endif
  
@@ -61,4 +61,4 @@ Forwarded: not-needed
 -
  $(FSSLOWER_ALIASES): fsslower
  	$(call msg,SYMLINK,$@)
- 	$(Q)ln -f -s $^ $@
+ 	$(Q)ln -f -s $(APP_PREFIX)$^ $@
