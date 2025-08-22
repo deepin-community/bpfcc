@@ -29,6 +29,7 @@ ifneq ($(DEB_HOST_ARCH),$(findstring $(DEB_HOST_ARCH), $(libbpf_tool_skip_arch))
 endif
 	dh_auto_clean
 	sed -i 's|lib=$$(dirname $$0)$$|lib=$$(dirname $$0)/lib|' $(CURDIR)/tools/*.sh
+	rm -f src/cc/compat/linux/bpf.h
 
 override_dh_auto_configure:
 	sed -i "s/\/lib//" $(CURDIR)/tools/*.sh
@@ -42,7 +43,18 @@ override_dh_auto_install:
 	dh_auto_install
 ifneq ($(DEB_HOST_ARCH),$(findstring $(DEB_HOST_ARCH), $(libbpf_tool_skip_arch)))
 	make -C libbpf-tools V=1 prefix=$(DEB_DIR)/tmp/libbpf-tools install
+
+	for eachFile in $(CURDIR)/debian/tmp/libbpf-tools/bin/* ; do \
+		if [ -L $$eachFile ]; then \
+			actual_file=$$(readlink $$eachFile)-libbpf ; \
+			mv $$eachFile $$eachFile-libbpf ; \
+			ln -sf $$actual_file $$eachFile-libbpf ; \
+		else \
+			mv $$eachFile $$eachFile-libbpf ; \
+		fi \
+	done
 endif
+
 	test -d $(CURDIR)/debian/tmp/usr/share/bcc/tools/doc && \
 		mv $(CURDIR)/debian/tmp/usr/share/bcc/tools/doc/* \
 			$(CURDIR)/debian/tmp/usr/share/bcc/doc/ && \

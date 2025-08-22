@@ -1,3 +1,16 @@
+bpfcc (0.31.0+ds-5) unstable; urgency=medium
+
+  Starting with this version, all binary files for the libbpf-tools
+  package have been renamed to $filename-libbpf suffix.
+  .
+  For example: execsnoop => execsnoop-libbpf
+  .
+  This is to ensure that we have consistency across the different
+  variants of the tools, namely: bpfcc-tools, perf-tools-unstable and
+  libbpf-tools
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Mon, 17 Mar 2025 15:06:03 +0530
+
 bpfcc (0.2.0-2) unstable; urgency=medium
 
   Starting with version 0.2.0-2, all binary files have been renamed to

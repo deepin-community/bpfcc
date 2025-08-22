@@ -1,8 +1,94 @@
-bpfcc (0.29.1+ds-1deepin1) unstable; urgency=medium
+bpfcc (0.31.0+ds-7) unstable; urgency=medium
 
-  * add support for riscv64 and loong64.
+  * [08d414e] Remove the bpf.h header file in clean target
+    (Closes: #1043620)
 
- -- LiChengGang <lichenggang@uniontech.com>  Fri, 02 Feb 2024 00:05:31 +0800
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Fri, 28 Mar 2025 15:37:43 +0530
+
+bpfcc (0.31.0+ds-6) unstable; urgency=medium
+
+  * [ba6b4ba] Fix libbpf-tools name mangling conditionally
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Thu, 27 Mar 2025 20:55:41 +0530
+
+bpfcc (0.31.0+ds-5) unstable; urgency=medium
+
+  [ Vasudev Kamath ]
+  * [be5961e] Add missing history
+
+  [ Ritesh Raj Sarraf ]
+  * [8de04cb] Install each binary with an origin suffix (Closes: #1076223)
+  * [e0b4de2] Add a NEWS entry for the libbpf binary renames
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Mon, 17 Mar 2025 15:09:42 +0530
+
+bpfcc (0.31.0+ds-4) unstable; urgency=medium
+
+  * Upload to Debian Unstable
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Wed, 02 Oct 2024 19:27:45 +0530
+
+bpfcc (0.31.0+ds-4~exp2) experimental; urgency=medium
+
+  * [e12ef64] Add arch loong64 and ppc64 in LUA block list
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Mon, 30 Sep 2024 16:14:19 +0530
+
+bpfcc (0.31.0+ds-4~exp1) experimental; urgency=medium
+
+  * [03bf70b] Disable lua support for the riscv64 arch
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Fri, 27 Sep 2024 20:07:42 +0530
+
+bpfcc (0.31.0+ds-3) unstable; urgency=medium
+
+  * [efa82a5] Drop architectures loong64 ppc64 riscv64 for bpfcc-lua
+  * [dadf8f8] Drop the list of architectures for luajit build dependency
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Fri, 20 Sep 2024 15:05:37 +0530
+
+bpfcc (0.31.0+ds-2) unstable; urgency=medium
+
+  * Upload to Debian Unstable
+  * [7a00bb4] Mark binary package bpfcc-lua be inline with binary package
+    libbpfcc
+  * [77e0d92] Enable luajit for arm64 as well
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Thu, 19 Sep 2024 19:50:36 +0530
+
+bpfcc (0.31.0+ds-1) experimental; urgency=medium
+
+  * [0dae105] New upstream version 0.31.0+ds
+  * [97f6a06] Refresh and forward-port patches
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Wed, 18 Sep 2024 17:24:58 +0530
+
+bpfcc (0.30.0+ds-1) unstable; urgency=medium
+
+  * [383b111] New upstream version 0.30.0+ds
+  * [698ac74] Refresh patch 0001
+  * [d115482] Refresh patch 2003-libbpf-tools-debian.patch
+
+ -- Vasudev Kamath <vasudev@debian.org>  Fri, 19 Jul 2024 10:37:16 +0530
+
+bpfcc (0.29.1+ds-1.2) unstable; urgency=medium
+
+  * Non-maintainer upload.
+
+  [ zhangdandan <zhangdandan@loongson.cn> ]
+  * Add support for loongarch64 (Closes: #1072569)
+
+  [ Bo YU <tsu.yubo@gmail.com> ]
+  * Add support for riscv64 (Closes: #1036051)
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Tue, 16 Jul 2024 21:31:52 +0200
+
+bpfcc (0.29.1+ds-1.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * [46b1ef4] Drop ppc64el from supported architectures (Closes: #1070768)
+
+ -- Luca Boccassi <bluca@debian.org>  Sat, 11 May 2024 11:46:38 +0100
 
 bpfcc (0.29.1+ds-1) unstable; urgency=medium
 
@@ -19,6 +105,18 @@ bpfcc (0.28.0+ds-1) unstable; urgency=medium
   * [7115e7c] Mark patch 2003 forwarded as not-needed
 
  -- Vasudev Kamath <vasudev@debian.org>  Sun, 17 Dec 2023 12:11:00 +0530
+
+bpfcc (0.26.0+ds-2~experimental2) experimental; urgency=medium
+
+  * [0e31111] Set architectures to linux-any
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Thu, 16 Feb 2023 21:10:18 +0530
+
+bpfcc (0.26.0+ds-2~experimental1) experimental; urgency=medium
+
+  * [ab623bb] Enable all available architecture builds (Closes: #1030657)
+
+ -- Ritesh Raj Sarraf <rrs@debian.org>  Wed, 15 Feb 2023 13:41:17 +0530
 
 bpfcc (0.26.0+ds-1) unstable; urgency=medium
 

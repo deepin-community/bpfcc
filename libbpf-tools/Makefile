@@ -9,10 +9,11 @@ LIBBPF_SRC := $(abspath ../src/cc/libbpf/src)
 LIBBPF_OBJ := $(abspath $(OUTPUT)/libbpf.a)
 LIBBLAZESYM_SRC := $(abspath blazesym/target/release/libblazesym.a)
 INCLUDES := -I$(OUTPUT) -I../src/cc/libbpf/include/uapi
-CFLAGS := -g -O2 -Wall
+CFLAGS := -g -O2 -Wall -Wmissing-field-initializers -Werror
 BPFCFLAGS := -g -O2 -Wall
 INSTALL ?= install
 prefix ?= /usr/local
+bindir := $(prefix)/bin
 ARCH ?= $(shell uname -m | sed 's/x86_64/x86/' | sed 's/aarch64/arm64/' \
 			 | sed 's/ppc64le/powerpc/' | sed 's/mips.*/mips/' \
 			 | sed 's/riscv64/riscv/' | sed 's/loongarch.*/loongarch/' \
@@ -69,6 +70,7 @@ APPS = \
 	numamove \
 	offcputime \
 	oomkill \
+	profile \
 	readahead \
 	runqlat \
 	runqlen \
@@ -78,6 +80,7 @@ APPS = \
 	softirqs \
 	solisten \
 	statsnoop \
+	syncsnoop \
 	syscount \
 	tcptracer \
 	tcpconnect \
@@ -96,8 +99,8 @@ APPS = \
 # export variables that are used in Makefile.btfgen as well.
 export OUTPUT BPFTOOL ARCH BTFHUB_ARCHIVE APPS
 
-FSDIST_ALIASES = btrfsdist ext4dist nfsdist xfsdist f2fsdist
-FSSLOWER_ALIASES = btrfsslower ext4slower nfsslower xfsslower f2fsslower
+FSDIST_ALIASES = btrfsdist ext4dist nfsdist xfsdist f2fsdist bcachefsdist
+FSSLOWER_ALIASES = btrfsslower ext4slower nfsslower xfsslower f2fsslower bcachefsslower
 SIGSNOOP_ALIAS = killsnoop
 APP_ALIASES = $(FSDIST_ALIASES) $(FSSLOWER_ALIASES) ${SIGSNOOP_ALIAS}
 
@@ -222,21 +225,21 @@ $(LIBBPF_OBJ): $(wildcard $(LIBBPF_SRC)/*.[ch]) | $(OUTPUT)/libbpf
 
 $(FSSLOWER_ALIASES): fsslower
 	$(call msg,SYMLINK,$@)
-	$(Q)ln -f -s $^ $@
+	$(Q)ln -f -s $(APP_PREFIX)$^ $@
 
 $(FSDIST_ALIASES): fsdist
 	$(call msg,SYMLINK,$@)
-	$(Q)ln -f -s $^ $@
+	$(Q)ln -f -s $(APP_PREFIX)$^ $@
 
 $(SIGSNOOP_ALIAS): sigsnoop
 	$(call msg,SYMLINK,$@)
-	$(Q)ln -f -s $^ $@
+	$(Q)ln -f -s $(APP_PREFIX)$^ $@
 
 install: $(APPS) $(APP_ALIASES)
 	$(call msg, INSTALL libbpf-tools)
-	$(Q)$(INSTALL) -m 0755 -d $(DESTDIR)$(prefix)/bin
-	$(Q)$(INSTALL) $(APPS) $(DESTDIR)$(prefix)/bin
-	$(Q)cp -a $(APP_ALIASES) $(DESTDIR)$(prefix)/bin
+	$(Q)$(INSTALL) -m 0755 -d $(DESTDIR)$(bindir)
+	$(Q)$(foreach app,$(APPS),$(INSTALL) $(app) $(DESTDIR)$(bindir)/$(APP_PREFIX)$(app);)
+	$(Q)$(foreach alias,$(APP_ALIASES),cp -a $(alias) $(DESTDIR)$(bindir)/$(APP_PREFIX)$(alias);)
 
 .PHONY: force
 force:

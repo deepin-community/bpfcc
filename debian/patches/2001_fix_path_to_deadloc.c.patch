@@ -7,7 +7,7 @@ Last-Update: 2020-09-04
 
 --- a/tools/deadlock.py
 +++ b/tools/deadlock.py
-@@ -475,7 +475,7 @@
+@@ -482,7 +482,7 @@
              print('%s. Is the process (pid=%d) running?' % (str(e), args.pid))
              sys.exit(1)
  
