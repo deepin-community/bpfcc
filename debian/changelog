@@ -1,3 +1,9 @@
+bpfcc (0.29.1+ds-1deepin2) unstable; urgency=medium
+
+  * Build against LLVM 17.
+
+ -- Tianyu Chen <sweetyfish@deepin.org>  Thu, 26 Nov 2026 15:18:36 +0800
+
 bpfcc (0.29.1+ds-1deepin1) unstable; urgency=medium
 
   * add support for riscv64 and loong64.
